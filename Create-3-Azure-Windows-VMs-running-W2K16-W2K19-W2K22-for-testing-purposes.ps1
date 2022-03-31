@@ -271,7 +271,7 @@ try {
     # Create a configurable VM object
     $vm01 = New-AzVMConfig -Name $vmName01.ToLower() -VMSize $vmSize 
 
-    # Add te NIC
+    # Add the NIC
     Add-AzVMNetworkInterface -VM $vm01 -Id $nicVM01.Id | Out-Null    
 
     # Specify the image
@@ -315,7 +315,7 @@ try {
     # Create a configurable VM object
     $vm02 = New-AzVMConfig -Name $vmName02.ToLower() -VMSize $vmSize
 
-    # Add te NIC
+    # Add the NIC
     Add-AzVMNetworkInterface -VM $vm02 -Id $nicVM02.Id | Out-Null   
 
     # Specify the image
@@ -359,7 +359,7 @@ try {
     # Create a configurable VM object
     $vm03 = New-AzVMConfig -Name $vmName03.ToLower() -VMSize $vmSize
 
-    # Add te NIC
+    # Add the NIC
     Add-AzVMNetworkInterface -VM $vm03 -Id $nicVM03.Id | Out-Null   
 
     # Specify the image
