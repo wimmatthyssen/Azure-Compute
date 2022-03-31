@@ -57,8 +57,8 @@ $vmName01 = "vm" + "-" + $companyShortName + "-" + $vmPurpose + "-" + "01"
 $vmName02 = "vm" + "-" + $companyShortName + "-" + $vmPurpose + "-" + "02"
 $vmName03 = "vm" + "-" + $companyShortName + "-" + $vmPurpose + "-" + "03"
 
-$userName = "loc_admin" 
-$password = "W0lverine2410;P,"
+$userName = #<your VM username here> The VM user name here. Example: "tstadmin23" 
+$password = #<your VM password here> The VM password here. Example: "P@ssw0rd;1234" 
 
 $vnetName = #<your VNet name here> The existing VNet in which the VM resources will be created. Example: "vnet-tst-myh-weu"
 $subnetNameVM = #<your subnetname here> The existing VNet in which the VM resources will be created. Example: "snet-tst-myh-app-01"
