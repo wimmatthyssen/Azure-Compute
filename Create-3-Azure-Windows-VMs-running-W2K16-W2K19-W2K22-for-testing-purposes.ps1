@@ -299,6 +299,14 @@ try {
 $vm01 = Get-AzVM -ResourceGroupName $rgVMSpoke -Name $vmName01
 Update-AzTag -Tag $tags -ResourceId $vm01.Id -Operation Merge | Out-Null
 
+# Get OS version VM1
+$osVersion = $vm01.StorageProfile.ImageReference.Offer + " $($vm01.StorageProfile.ImageReference.Sku)"
+
+# Add OS tag VM1
+$storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName01).Tags
+$storeTags += @{$tagOSVersionName = $osVersion}
+Update-AzTag -Tag $storeTags -ResourceId $vm01.Id -Operation Merge | Out-Null
+
 Write-Host ($writeEmptyLine + "# VM $vmName01 created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
@@ -343,6 +351,14 @@ try {
 $vm02 = Get-AzVM -ResourceGroupName $rgVMSpoke -Name $vmName02
 Update-AzTag -Tag $tags -ResourceId $vm02.Id -Operation Merge | Out-Null
 
+# Get OS version VM2
+$osVersion = $vm02.StorageProfile.ImageReference.Offer + " $($vm02.StorageProfile.ImageReference.Sku)"
+
+# Add OS tag to VM2
+$storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName02).Tags
+$storeTags += @{$tagOSVersionName = $osVersion}
+Update-AzTag -Tag $storeTags -ResourceId $vm02.Id -Operation Merge | Out-Null
+
 Write-Host ($writeEmptyLine + "# VM $vmName02 created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
@@ -385,7 +401,15 @@ try {
 
 # Set tags on VM3
 $vm03 = Get-AzVM -ResourceGroupName $rgVMSpoke -Name $vmName03
-Update-AzTag -Tag $tags -ResourceId $vm03.Id -Operation Merge | Out-Null  
+Update-AzTag -Tag $tags -ResourceId $vm03.Id -Operation Merge | Out-Null
+
+# Get OS version VM3
+$osVersion = $vm03.StorageProfile.ImageReference.Offer + " $($vm03.StorageProfile.ImageReference.Sku)"
+
+# Add OS tag to VM3
+$storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName03).Tags
+$storeTags += @{$tagOSVersionName = $osVersion}
+Update-AzTag -Tag $storeTags -ResourceId $vm03.Id -Operation Merge | Out-Null
 
 Write-Host ($writeEmptyLine + "# VM $vmName03 created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
