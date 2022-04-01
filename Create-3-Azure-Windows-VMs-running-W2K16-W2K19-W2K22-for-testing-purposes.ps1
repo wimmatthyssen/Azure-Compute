@@ -43,7 +43,6 @@ Connect-AzAccount
 $companyShortName =#<your company short name here> The used company short name. Example: "myh"
 $spoke = #<your spoke short name here> The used spoke short name. Example: "tst"
 $location = #<your region here> The used Azure public region. Example: "westeurope"
-$vmPurpose = $spoke
 $skuShortLRS = "lrs"
 
 $rgVMSpoke = #<your VM rg here> The new Azure resource group in which the new Bastion resource will be created. Example: "rg-tst-myh-vm-01"
@@ -53,9 +52,9 @@ $storageSkuNameStandardLrs = "Standard_LRS"
 $storageAccountType = "StorageV2"
 $storageMinimumTlsVersion = "TLS1_2"
 
-$vmName01 = "vm" + "-" + $companyShortName + "-" + $vmPurpose + "-" + "01"
-$vmName02 = "vm" + "-" + $companyShortName + "-" + $vmPurpose + "-" + "02"
-$vmName03 = "vm" + "-" + $companyShortName + "-" + $vmPurpose + "-" + "03"
+$vmName01 = "vm" + "-" + $companyShortName + "-" + $spoke + "-" + "01"
+$vmName02 = "vm" + "-" + $companyShortName + "-" + $spoke + "-" + "02"
+$vmName03 = "vm" + "-" + $companyShortName + "-" + $spoke + "-" + "03"
 
 $userName = #<your VM username here> The VM user name here. Example: "tstadmin23" 
 $password = #<your VM password here> The VM password here. Example: "P@ssw0rd;1234" 
@@ -65,9 +64,6 @@ $subnetNameVM = #<your subnetname here> The existing VNet in which the VM resour
 $nicNameVM01 = "nic" + "-" + "01" + "-" +  $vmName01
 $nicNameVM02 = "nic" + "-" + "01" + "-" +  $vmName02
 $nicNameVM03 = "nic" + "-" + "01" + "-" +  $vmName03
-$ipAddressVM01 = #<your IP address for VM 1 here> The IP address you want to use for VM 1. Example: "10.1.5.85"
-$ipAddressVM02 = #<your IP address for VM 2 here> The IP address you want to use for VM 2. Example: "10.1.5.86"
-$ipAddressVM03 = #<your IP address for VM 3 here> The IP address you want to use for VM 3. Example: "10.1.5.87"
 
 $osSKU01 = "2016-Datacenter-smalldisk"
 $osSKU02 = "2019-Datacenter-smalldisk"
@@ -94,6 +90,7 @@ $tagPurposeName = #<your Purpose tag name here> The Purpose tag name you want to
 $tagPurposeValue = #<your Purpose tag value here> The Purpose tag value you want to use. Example:"Test"
 $tagEndDateName = #<your End Date tag name here> The End Date tag name you want to use. Example:"EndDate"
 $tagEndDateValue = #<your End Date tag value here> The End Date tag value you want to use. Example:"30-04-2022"
+$tagOSVersionName = #<your OS Version tag name here> The OS Version tag name you want to use. Example:"OperatingSystem"
 
 $global:currenttime= Set-PSBreakpoint -Variable currenttime -Mode Read -Action {$global:currenttime= Get-Date -UFormat "%A %m/%d/%Y %R"}
 $foregroundColor1 = "Red"
@@ -195,45 +192,65 @@ Write-Host ($writeEmptyLine + "# Storage account $bootDiagStorageAccount created
 
 ## Create the NICs for all VMs, if they don't exist
 
+## Create the NICs for all VMs, if they don't exist
+
 # Get the VNet to which to connect the NIC
 $vnet = Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgNetworkingSpoke
 
 # Get the Subnet ID to which to connect the NIC
 $subnetID = (Get-AzVirtualNetworkSubnetConfig -Name $subnetNameVM -VirtualNetwork $vnet).Id
 
-# Create NIC VM 1
+# Create dynamic NIC VM 1
 try {
     Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM01 -ErrorAction Stop | Out-Null 
 } catch {
-    New-AzNetworkInterface -Name $nicNameVM01.ToLower() -ResourceGroupName $rgVMSpoke -Location $location -SubnetId $subnetID -PrivateIpAddress $ipAddressVM01 | Out-Null 
+    New-AzNetworkInterface -Name $nicNameVM01.ToLower() -ResourceGroupName $rgVMSpoke -Location $location -SubnetId $subnetID | Out-Null 
 }
 
-# Set tags on NIC VM1
+# Store NIC VM 1 in a variable 
 $nicVM01 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM01
+
+# Set private IP address NIC VM 1 to static
+$nicVM01.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
+Set-AzNetworkInterface -NetworkInterface $nicVM01 | Out-Null
+
+# Set tags on NIC VM1
 $nicVM01.Tag = $tags
 Set-AzNetworkInterface -NetworkInterface $nicVM01 | Out-Null
 
-# Create NIC VM 2
+# Create dynamic NIC VM 2
 try {
     Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM02 -ErrorAction Stop | Out-Null 
 } catch {
-    New-AzNetworkInterface -Name $nicNameVM02.ToLower() -ResourceGroupName $rgVMSpoke -Location $location -SubnetId $subnetID -PrivateIpAddress $ipAddressVM02 | Out-Null 
+    New-AzNetworkInterface -Name $nicNameVM02.ToLower() -ResourceGroupName $rgVMSpoke -Location $location -SubnetId $subnetID | Out-Null 
 }
 
-# Set tags on NIC VM2
+# Store NIC VM 2 in a variable 
 $nicVM02 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM02
+
+# Set private IP address NIC VM 1 to static
+$nicVM02.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
+Set-AzNetworkInterface -NetworkInterface $nicVM02 | Out-Null
+
+# Set tags on NIC VM1
 $nicVM02.Tag = $tags
 Set-AzNetworkInterface -NetworkInterface $nicVM02 | Out-Null
 
-# Create NIC VM 3
+# Create dynamic NIC VM 3
 try {
     Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM03 -ErrorAction Stop | Out-Null 
 } catch {
-    New-AzNetworkInterface -Name $nicNameVM03.ToLower() -ResourceGroupName $rgVMSpoke -Location $location -SubnetId $subnetID -PrivateIpAddress $ipAddressVM03 | Out-Null 
+    New-AzNetworkInterface -Name $nicNameVM03.ToLower() -ResourceGroupName $rgVMSpoke -Location $location -SubnetId $subnetID | Out-Null 
 }
 
-# Set tags on NIC VM3
+# Store NIC VM 3 in a variable 
 $nicVM03 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM03
+
+# Set private IP address NIC VM 1 to static
+$nicVM03.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
+Set-AzNetworkInterface -NetworkInterface $nicVM03 | Out-Null
+
+# Set tags on NIC VM1
 $nicVM03.Tag = $tags
 Set-AzNetworkInterface -NetworkInterface $nicVM03 | Out-Null
 
@@ -245,7 +262,7 @@ Write-Host ($writeEmptyLine + "# NICs $nicNameVM01, $nicNameVM02 and $nicNameVM0
 ## Specify the local administrator account
  
 $passwordSec = convertto-securestring $password -asplaintext -force 
-$creds = New-Object System.Management.Automation.PSCredential($userName, $passwordSec)
+$creds = New-Object System.Management.Automation.PSCredential($userName,$passwordSec)
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -302,7 +319,7 @@ Update-AzTag -Tag $tags -ResourceId $vm01.Id -Operation Merge | Out-Null
 # Get OS version VM1
 $osVersion = $vm01.StorageProfile.ImageReference.Offer + " $($vm01.StorageProfile.ImageReference.Sku)"
 
-# Add OS tag VM1
+# Add OS tag to VM1
 $storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName01).Tags
 $storeTags += @{$tagOSVersionName = $osVersion}
 Update-AzTag -Tag $storeTags -ResourceId $vm01.Id -Operation Merge | Out-Null
