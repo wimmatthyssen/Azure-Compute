@@ -227,7 +227,7 @@ try {
 # Store NIC VM 2 in a variable 
 $nicVM02 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM02
 
-# Set private IP address NIC VM 1 to static
+# Set private IP address NIC VM 2 to static
 $nicVM02.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
 Set-AzNetworkInterface -NetworkInterface $nicVM02 | Out-Null
 
@@ -245,7 +245,7 @@ try {
 # Store NIC VM 3 in a variable 
 $nicVM03 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM03
 
-# Set private IP address NIC VM 1 to static
+# Set private IP address NIC VM 3 to static
 $nicVM03.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
 Set-AzNetworkInterface -NetworkInterface $nicVM03 | Out-Null
 
