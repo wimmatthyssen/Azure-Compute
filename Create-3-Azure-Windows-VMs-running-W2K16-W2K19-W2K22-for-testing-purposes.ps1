@@ -193,8 +193,6 @@ Write-Host ($writeEmptyLine + "# Storage account $bootDiagStorageAccount created
 
 ## Create the NICs for all VMs, if they don't exist
 
-## Create the NICs for all VMs, if they don't exist
-
 # Get the VNet to which to connect the NIC
 $vnet = Get-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgNetworkingSpoke
 
