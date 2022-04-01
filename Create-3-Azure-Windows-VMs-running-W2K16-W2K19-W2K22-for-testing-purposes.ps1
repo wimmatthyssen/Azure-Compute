@@ -11,8 +11,9 @@ The script will first check if PowerShell runs as Administrator (when not runnin
 Secondly it will change the current context to use your test  subscription.
 Then it will store a set of specified tags into a hash table.
 Next it will create a resource group for the test VMs and all associated resources, if it not already exists.
-Afterwards it will create a general purpose v2 storage account with specific configuration settings (like minimum TLS version set to 1.2, allow public access disabled) to store boot diagnostics, if it not already exists.
-Then it will create the 3 VMs (VM 1 W2K16, VM 2 W2K19 and VM3 W2K22) and all associated resources ,like the NICs, Operating System (OS) and Data disks, if they don't already exist.
+Afterwards it will create a general purpose v2 storage account with specific configuration settings (like minimum TLS version set to 1.2) to store boot diagnostics, if it not already exists.
+Then it will create 3 network interfaces (NICs) and configure those with the first free private IP address in the specified subnet, and set the assignment to Static. 
+Next it will create the 3 VMs (VM 1 W2K16, VM 2 W2K19 and VM3 W2K22) and all other associated resources ,like the Operating System (OS) and Data disks, if they don't already exist.
 And before the script is completed, it will set the specified tags on all disks in the resource group.
 
 .NOTES
