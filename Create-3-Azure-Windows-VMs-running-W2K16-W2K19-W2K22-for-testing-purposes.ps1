@@ -231,7 +231,7 @@ $nicVM02 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM
 $nicVM02.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
 Set-AzNetworkInterface -NetworkInterface $nicVM02 | Out-Null
 
-# Set tags on NIC VM1
+# Set tags on NIC VM2
 $nicVM02.Tag = $tags
 Set-AzNetworkInterface -NetworkInterface $nicVM02 | Out-Null
 
@@ -249,7 +249,7 @@ $nicVM03 = Get-AzNetworkInterface -ResourceGroupName $rgVMSpoke -Name $nicNameVM
 $nicVM03.IpConfigurations[0].PrivateIpAllocationMethod = "Static"
 Set-AzNetworkInterface -NetworkInterface $nicVM03 | Out-Null
 
-# Set tags on NIC VM1
+# Set tags on NIC VM3
 $nicVM03.Tag = $tags
 Set-AzNetworkInterface -NetworkInterface $nicVM03 | Out-Null
 
