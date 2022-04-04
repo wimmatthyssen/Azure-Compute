@@ -108,7 +108,7 @@ if ($PSVersionTable.Platform -eq "Unix") {
     -foregroundcolor $foregroundColor1 $writeEmptyLine
     
     ## Start script execution    
-    Write-Host ($writeEmptyLine + "# Script started. Without any errors, it will need around 11 minutes to complete" + $writeSeperatorSpaces + $currentTime)`
+    Write-Host ($writeEmptyLine + "# Script started. Without any errors, it will need around 12 minutes to complete" + $writeSeperatorSpaces + $currentTime)`
     -foregroundcolor $foregroundColor1 $writeEmptyLine 
 } else {
     $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -124,7 +124,7 @@ if ($PSVersionTable.Platform -eq "Unix") {
         else {
 
         ## If running as Administrator, start script execution    
-        Write-Host ($writeEmptyLine + "# Script started. Without any errors, it will need around 11 minutes to complete" + $writeSeperatorSpaces + $currentTime)`
+        Write-Host ($writeEmptyLine + "# Script started. Without any errors, it will need around 12 minutes to complete" + $writeSeperatorSpaces + $currentTime)`
         -foregroundcolor $foregroundColor1 $writeEmptyLine 
         }
 }
