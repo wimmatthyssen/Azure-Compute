@@ -44,7 +44,7 @@ Connect-AzAccount
 
 .LINK
 
-
+https://wmatthyssen.com/2022/04/04/azure-powershell-script-create-three-azure-windows-vms-running-w2k16-w2k19-and-w2k22-for-testing-purposes/
 #>
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
