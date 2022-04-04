@@ -7,20 +7,30 @@ A script used to create 3 Azure Windows VMs running Windows Server 2016, Windows
 .DESCRIPTION
 
 A script used to create 3 Azure Windows VMs running Windows Server 2016, Windows Server 2019 and Windows Server 2022, for testing purposes.
-The script will first check if PowerShell runs as Administrator (when not running from Cloud Shell), otherwise the script will be exited.
-Secondly it will change the current context to use your test  subscription.
-Then it will store a set of specified tags into a hash table.
-Next it will create a resource group for the test VMs and all associated resources, if it not already exists.
-Afterwards it will create a general purpose v2 storage account with specific configuration settings (like minimum TLS version set to 1.2) to store boot diagnostics, if it not already exists.
-Then it will create 3 network interfaces (NICs) and configure those with the first free private IP address in the specified subnet, and set the assignment to Static. 
-Next it will create the 3 VMs (VM 1 W2K16, VM 2 W2K19 and VM3 W2K22) and all other associated resources ,like the Operating System (OS) and Data disks, if they don't already exist.
-And before the script is completed, it will set the specified tags on all disks in the resource group.
+This script will do all of the following:
+
+Check if the PowerShell window is running as Administrator (which is a requirement), otherwise the Azure PowerShell script will be exited.
+Suppress breaking change warning messages.
+Change the current context to use a test subscription (a subscription with *tst* in the Subscription name will be automatically selected).
+Store a specified set of tags in a hash table.
+Create a resource group for the test VMs and all associated resources, if it not already exists. Also apply the necessary tags to this resource group.
+Create a general purpose v2 storage account to store boot diagnostics with specific configuration settings,like minimum TLS version set to 1.2, if it not already exists. 
+Apply the necessary tags to this storage account.
+Create 3 network interfaces (NICs), if they not already exist. 
+Then configure those 3 NICs with the first three free private IP address in the specified subnet, and set their assignment to Static. 
+Apply the necessary tags to these NICs.
+Specify the local administrator account and password (Username and Password).
+Get the latest Azure Marketplace VMImage for Windows Server 2016, 2019 and 2022 that match the specified values and store it in a variable for later use.
+Create VM 1 and all other associated resources, like the Operating System (OS) and Data disks, if they don’t already exist.
+Create VM 2 and all other associated resources, like the OS and Data disks, if they don’t already exist.
+Create VM 3 and all other associated resources, like the OS and Data disks, if they don’t already exist.
+Set tags on all disks in the resource group.
 
 .NOTES
 
 Filename:       Create-3-Azure-Windows-VMs-running-W2K16-W2K19-W2K22-for-testing-purposes.ps1
 Created:        28/03/2022
-Last modified:  31/03/2022
+Last modified:  04/04/2022
 Author:         Wim Matthyssen
 PowerShell:     Azure PowerShell
 Version:        Install latest Az modules
@@ -265,7 +275,7 @@ $creds = New-Object System.Management.Automation.PSCredential($userName,$passwor
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-##  Get the latest Azure Marketplace VMImage for Windows Server 2016, 2019 and 2022 that match the specified values
+##  Get the latest Azure Marketplace VMImage for Windows Server 2016, 2019 and 2022 that match the specified values and store it in a varialbe for later use
 
 $images01 = Get-AzVMImage -Location $location -PublisherName "MicrosoftWindowsServer" -Offer "WindowsServer" -Skus $osSKU01 | Sort-Object -Descending -Property PublishedDate
 $images02 = Get-AzVMImage -Location $location -PublisherName "MicrosoftWindowsServer" -Offer "WindowsServer" -Skus $osSKU02 | Sort-Object -Descending -Property PublishedDate
@@ -417,7 +427,7 @@ try {
 
 # Set tags on VM3
 $vm03 = Get-AzVM -ResourceGroupName $rgVMSpoke -Name $vmName03
-Update-AzTag -Tag $tags -ResourceId $vm03.Id -Operation Merge | Out-Null
+Update-AzTag -Tag $tags -ResourceId $vm03.Id -Operation Merge | Out-Null 
 
 # Get OS version VM3
 $osVersion = $vm03.StorageProfile.ImageReference.Offer + " $($vm03.StorageProfile.ImageReference.Sku)"
