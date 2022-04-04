@@ -20,7 +20,7 @@ Create 3 network interfaces (NICs), if they not already exist.
 Then configure those 3 NICs with the first three free private IP address in the specified subnet, and set their assignment to Static. 
 Apply the necessary tags to these NICs.
 Specify the local administrator account and password (Username and Password).
-Get the latest Azure Marketplace VMImage for Windows Server 2016, 2019 and 2022 that match the specified values and store it in a variable for later use.
+Get the latest Azure Marketplace VMImage for Windows Server 2016, 2019 and 2022 that match the specified values (smalldisk images) and store it in a variable for later use.
 Create VM 1 and all other associated resources, like the Operating System (OS) and Data disks, if they don’t already exist.
 Create VM 2 and all other associated resources, like the OS and Data disks, if they don’t already exist.
 Create VM 3 and all other associated resources, like the OS and Data disks, if they don’t already exist.
