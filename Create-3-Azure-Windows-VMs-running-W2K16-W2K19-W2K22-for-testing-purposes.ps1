@@ -329,9 +329,8 @@ Update-AzTag -Tag $tags -ResourceId $vm01.Id -Operation Merge | Out-Null
 $osVersion = $vm01.StorageProfile.ImageReference.Offer + " $($vm01.StorageProfile.ImageReference.Sku)"
 
 # Add OS tag to VM1
-$storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName01).Tags
-$storeTags += @{$tagOSVersionName = $osVersion}
-Update-AzTag -Tag $storeTags -ResourceId $vm01.Id -Operation Merge | Out-Null
+$osTag = @{$tagOSVersionName = $osVersion}
+Update-AzTag -Tag $osTag -ResourceId $vm01.Id -Operation Merge | Out-Null
 
 Write-Host ($writeEmptyLine + "# VM $vmName01 created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
@@ -381,9 +380,8 @@ Update-AzTag -Tag $tags -ResourceId $vm02.Id -Operation Merge | Out-Null
 $osVersion = $vm02.StorageProfile.ImageReference.Offer + " $($vm02.StorageProfile.ImageReference.Sku)"
 
 # Add OS tag to VM2
-$storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName02).Tags
-$storeTags += @{$tagOSVersionName = $osVersion}
-Update-AzTag -Tag $storeTags -ResourceId $vm02.Id -Operation Merge | Out-Null
+$osTag = @{$tagOSVersionName = $osVersion}
+Update-AzTag -Tag $osTag -ResourceId $vm02.Id -Operation Merge | Out-Null
 
 Write-Host ($writeEmptyLine + "# VM $vmName02 created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
@@ -433,9 +431,8 @@ Update-AzTag -Tag $tags -ResourceId $vm03.Id -Operation Merge | Out-Null
 $osVersion = $vm03.StorageProfile.ImageReference.Offer + " $($vm03.StorageProfile.ImageReference.Sku)"
 
 # Add OS tag to VM3
-$storeTags = (Get-AzResource -ResourceGroupName $rgVMSpoke -Name $vmName03).Tags
-$storeTags += @{$tagOSVersionName = $osVersion}
-Update-AzTag -Tag $storeTags -ResourceId $vm03.Id -Operation Merge | Out-Null
+$osTag = @{$tagOSVersionName = $osVersion}
+Update-AzTag -Tag $osTag -ResourceId $vm03.Id -Operation Merge | Out-Null
 
 Write-Host ($writeEmptyLine + "# VM $vmName03 created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
