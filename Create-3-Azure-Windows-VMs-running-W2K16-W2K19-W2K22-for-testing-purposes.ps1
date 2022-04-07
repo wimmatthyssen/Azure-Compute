@@ -30,7 +30,7 @@ Set tags on all disks in the resource group.
 
 Filename:       Create-3-Azure-Windows-VMs-running-W2K16-W2K19-W2K22-for-testing-purposes.ps1
 Created:        28/03/2022
-Last modified:  04/04/2022
+Last modified:  07/04/2022
 Author:         Wim Matthyssen
 PowerShell:     Azure PowerShell
 Version:        Install latest Az modules
