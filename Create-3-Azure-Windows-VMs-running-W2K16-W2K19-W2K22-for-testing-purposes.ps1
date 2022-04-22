@@ -56,7 +56,7 @@ $spoke = #<your spoke short name here> The used spoke short name. Example: "tst"
 $location = #<your region here> The used Azure public region. Example: "westeurope"
 $skuShortLRS = "lrs"
 
-$rgVMSpoke = #<your VM rg here> The new Azure resource group in which the new Bastion resource will be created. Example: "rg-tst-myh-vm-01"
+$rgVMSpoke = #<your VM rg here> The new Azure resource group in which the new VM resources will be created. Example: "rg-tst-myh-vm-01"
 $rgNetworkingSpoke = #<your VNet rg here> The Azure resource group in which your existing VNet is deployed. Example: "rg-tst-myh-networking"
 $bootDiagStorageAccount = "st" + $skuShortlrs + $spoke + $companyShortName + "diag"     
 $storageSkuNameStandardLrs = "Standard_LRS"
