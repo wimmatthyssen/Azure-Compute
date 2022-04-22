@@ -40,6 +40,8 @@ Disclaimer:     This script is provided "As Is" with no warranties.
 .EXAMPLE
 
 Connect-AzAccount
+Get-AzTenant (if not using the default tenant)
+Set-AzContext -tenantID "xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx" (if not using the default tenant)
 .\Create-3-Azure-Windows-VMs-running-W2K16-W2K19-W2K22-for-testing-purposes.ps1
 
 .LINK
