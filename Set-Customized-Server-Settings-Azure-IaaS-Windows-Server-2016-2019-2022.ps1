@@ -2,18 +2,18 @@
 
 .SYNOPSIS
 
-A script used to set customized server settings on Azure Windows VMs running Windows Server 2016, Windows Server 2019 and Windows Server 2022.
+A script used to set customized server settings on Azure Windows VMs running Windows Server 2016, Windows Server 2019 or Windows Server 2022.
 
 .DESCRIPTION
 
-A script used to set customized server settings on Azure Windows VMs running Windows Server 2016, Windows Server 2019 and Windows Server 2022.
+A script used to set customized server settings on Azure Windows VMs running Windows Server 2016, Windows Server 2019 or Windows Server 2022.
 This script will do all of the following:
 
-Check if the PowerShell window is running as Administrator (which is a requirement), otherwise the Azure PowerShell script will be exited.
+Check if the PowerShell window is running as Administrator (which is a requirement), otherwise the PowerShell script will be exited.
 Allow ICMP (ping) through Windows Firewall for IPv4 and IPv6.
 Enable Remote Desktop (RDP) and enable Windows Firewall rule.
-Enable Remote Management (for RSAT tools and Windows Admin Center) and enable Windows Firewall rules.
 Enable secure RDP authentication Network Level Authentication (NLA).
+Enable Remote Management (for RSAT tools and Windows Admin Center) and enable Windows Firewall rules.
 Enable User Account Control (UAC).
 Disable RDP printer mapping.
 Disable IE security for Administrators.
@@ -21,14 +21,14 @@ Disable Windows Admin Center pop-up.
 Disable Server Manager at logon.
 Disable guest account.
 Disable Hibernation.
-Set Windows Diagnostic level (Telemetry) to Security (no Windows diagnostic data will be send).
+Set Windows Diagnostic level (Telemetry) to Security (no Windows diagnostic data will be sent).
 Set Folder Options.
 Set volume label of C: to OS.
-Set Time Zone.
+Set Time Zone (UTC+01:00).
 Set Power Management to High Performance, if it is not currently the active plan.
-Set the Interactive Login to "Do not display the last user name".
-Set language to en-US and keyboard to Belgian (Period).
-Create the C:\Temp folder, if it not exists.
+Set the Interactive Login to "Do not display the last username".
+Set language to En-US and keyboard to Belgian (Period).
+Create the C:\Temp folder, if it does not exist.
 Remove description of the Local Administrator Account.
 Restart the server to apply all changes, five seconds after running the last command.
 
@@ -36,10 +36,10 @@ Restart the server to apply all changes, five seconds after running the last com
 
 Filename:       Set-Customized-Server-Settings-Azure-IaaS-Windows-Server-2016-2019-2022.ps1
 Created:        09/06/2022
-Last modified:  09/06/2022
+Last modified:  15/06/2022
 Author:         Wim Matthyssen
 PowerShell:     PowerShell
-Version:        Install latest Az modules
+Version:        5.1 or higher
 Action:         Change variables where needed to fit your needs
 Disclaimer:     This script is provided "As Is" with no warranties.
 
@@ -49,7 +49,7 @@ Disclaimer:     This script is provided "As Is" with no warranties.
 
 .LINK
 
-https://wmatthyssen.com/2022/04/04/azure-powershell-script-create-three-azure-windows-vms-running-w2k16-w2k19-and-w2k22-for-testing-purposes/
+
 #>
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,10 +65,10 @@ $allowIcmpV6FirewallRuleName = "Allow_Ping_ICMPv6" # ICMPv6 Firewall Rule Name
 $allowIcmpV6FirewallRuleDisplayName = "Allow Ping ICMPv6" # ICMPv6 Firewall Rule Display Name
 $allowIcmpV6FirewallRuleDescription = "Packet Internet Groper ICMPv6"
 $allowRdpDisplayName = "Remote Desktop*"
-$wmiFirewallRuleDisplayGroup = "Windows Management Instrumentation (WMI)"
-$remoteEventLogFirewallRuleDisplayGroup = "Remote Event Log Management"
 $rdpRegKeyPath = "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp"
 $rdpRegKeyName = "UserAuthentication"
+$wmiFirewallRuleDisplayGroup = "Windows Management Instrumentation (WMI)"
+$remoteEventLogFirewallRuleDisplayGroup = "Remote Event Log Management"
 $uacRegKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 $uacRegKeyName = "EnableLUA"
 $rdpPrinterMappingRegKeyPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services"
@@ -90,7 +90,7 @@ $folderOptionsHideDrivesWithNoMediaRegKeyName = "HideDrivesWithNoMedia"
 $folderOptionsSeperateProcessRegKeyName = "SeperateProcess" 
 $folderOptionsAlwaysShowMenusRegKeyName = "AlwaysShowMenus" 
 $windowsExplorerProcessName = "explorer"
-$cDriveLabel = "OS" #  Volume label of C:
+$cDriveLabel = "OS" # Volume label of C:
 $timezone = "Romance Standard Time" # Time zone
 $powerManagement = "High performance"
 $currentLangAndKeyboard = (Get-WinUserLanguageList).InputMethodTips
@@ -163,6 +163,15 @@ Write-Host ($writeEmptyLine + "# Remote Desktop enabled" + $writeSeperatorSpaces
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## Enable secure RDP authentication Network Level Authentication (NLA)
+
+Set-ItemProperty -Path $rdpRegKeyPath -name $rdpRegKeyName -Value 1 | Out-Null
+
+Write-Host ($writeEmptyLine + "# Secure RDP authentication Network Level Authentication enabled" + $writeSeperatorSpaces + $currentTime)`
+-foregroundcolor $foregroundColor2 $writeEmptyLine
+
+## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ## Enable Remote Management (for RSAT tools and Windows Admin Center) and enable Windows Firewall rules
 
 # Enable WinRM
@@ -185,15 +194,6 @@ try {
 }
 
 Write-Host ($writeEmptyLine + "# Remote Management enabled" + $writeSeperatorSpaces + $currentTime)`
--foregroundcolor $foregroundColor2 $writeEmptyLine
-
-## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-## Enable secure RDP authentication Network Level Authentication (NLA)
-
-Set-ItemProperty -Path $rdpRegKeyPath -name $rdpRegKeyName -Value 1 | Out-Null
-
-Write-Host ($writeEmptyLine + "# Secure RDP authentication Network Level Authentication enabled" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -264,7 +264,7 @@ Write-Host ($writeEmptyLine + "# Hibernation disabled" + $writeSeperatorSpaces +
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Set Windows Diagnostic level (Telemetry) to Security (no Windows diagnostic data will be send)
+## Set Windows Diagnostic level (Telemetry) to Security (no Windows diagnostic data will be sent)
 
 New-ItemProperty -Path $windowsDiagnosticLevelRegKeyPath -Name $windowsDiagnosticLevelRegKeyName -PropertyType "DWord" -Value 0 -Force | Out-Null
 
@@ -273,7 +273,7 @@ Write-Host ($writeEmptyLine + "# Windows Diagnostic level (Telemetry) set to Sec
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Set the Interactive Login to "Do not display the last user name"
+## Set the Interactive Login to "Do not display the last username"
 
 Set-ItemProperty -Path $interActiveLogonRegKeyPath -Name $interActiveLogonRegKeyName -Value 1 | Out-Null
 
@@ -310,7 +310,7 @@ Write-Host ($writeEmptyLine + "# Volumelabel of C: set to $cDriveLabel" + $write
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Set Time Zone
+## Set Time Zone (UTC+01:00)
 
 Set-TimeZone -Name $timezone
 
@@ -334,7 +334,7 @@ try {
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Set language to en-US and keyboard to Belgian (Period)
+## Set language to En-US and keyboard to Belgian (Period)
 
 if ($currentLangAndKeyboard -eq "0409:00000409") {
         $langList = New-WinUserLanguageList en-US
@@ -351,7 +351,7 @@ if ($currentLangAndKeyboard -eq "0409:00000409") {
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create the C:\Temp folder, if it not exists
+## Create the C:\Temp folder, if it does not exist.
 
 if (!(test-path $tempFolder))
 {
@@ -374,10 +374,10 @@ Write-Host ($writeEmptyLine + "# Description removed from Local Administrator Ac
 
 ## Restart server to apply all changes, five seconds after running the last command
 
-#Write-Host ($writeEmptyLine + "# This server will restart to apply all changes" + $writeSeperatorSpaces + $currentTime)`
-#-foregroundcolor $foregroundColor1 $writeEmptyLine
+Write-Host ($writeEmptyLine + "# This server will restart to apply all changes" + $writeSeperatorSpaces + $currentTime)`
+-foregroundcolor $foregroundColor1 $writeEmptyLine
 
-# Start-Sleep -s 5
-#Restart-Computer -ComputerName localhost
+Start-Sleep -s 5
+Restart-Computer -ComputerName localhost
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
