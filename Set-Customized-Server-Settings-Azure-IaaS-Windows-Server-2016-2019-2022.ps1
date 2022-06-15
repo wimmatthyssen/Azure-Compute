@@ -348,7 +348,6 @@ if ($currentLangAndKeyboard -eq "0409:00000409") {
         -foregroundcolor $foregroundColor2 $writeEmptyLine
 }
 
-
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Create the C:\Temp folder, if it does not exist.
