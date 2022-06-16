@@ -49,7 +49,7 @@ Disclaimer:     This script is provided "As Is" with no warranties.
 
 .LINK
 
-
+https://wmatthyssen.com/2022/06/16/powershell-script-set-customized-server-settings-on-azure-windows-vms-running-windows-server-2016-windows-server-2019-or-windows-server-2022/
 #>
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
