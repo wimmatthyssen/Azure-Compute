@@ -38,7 +38,7 @@ Set-AzContext -tenantID "xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx" (if not using the defa
 -> .\List-and-Export-VM-SKUs-in-region-with-minimum-number-of-NICs.ps1 -region westeurope -minNics 3
 
 .LINK
-
+https://wmatthyssen.com/2024/05/23/using-an-azure-powershell-script-to-list-and-export-azure-vm-skus-by-region-with-minimum-nics/
 #>
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
