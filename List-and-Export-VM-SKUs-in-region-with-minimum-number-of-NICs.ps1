@@ -10,7 +10,7 @@ The script will do all of the following:
 
 Remove the breaking change warning messages.
 Import the Az.Compute module if it is not already imported.
-Validate if the provided region is a valid Azure region.
+Validate if the provided region is a valid Azure region, otherwise exit the script.
 Create the C:\Temp folder if it does not exist.
 List VM SKUs with the specified value or more network interfaces in the specified region.
 Export the filtered SKUs to a CSV file without including type information.
@@ -96,7 +96,7 @@ Write-Host ($writeEmptyLine + "# Az.compute module available" + $writeSeperatorS
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Validate if the provided region is a valid Azure region
+## Validate if the provided region is a valid Azure region, otherwise exit the script
 
 # Define a list of valid Azure regions
 $validRegions = @(
