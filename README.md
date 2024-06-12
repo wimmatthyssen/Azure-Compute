@@ -13,3 +13,7 @@ Currently this repository holds the following scritps:
 - **Set-Customized-Server-Settings-Azure-IaaS-Windows-Server-2016-2019-2022.ps1**
 
   More information about this script used to set customized server settings on Azure Windows VMs running Windows Server 2016, Windows Server 2019 or Windows Server 2022, can be found on my blog: https://wmatthyssen.com/2022/06/16/powershell-script-set-customized-server-settings-on-azure-windows-vms-running-windows-server-2016-windows-server-2019-or-windows-server-2022/
+
+- **List-and-Export-VM-SKUs-in-region-with-minimum-number-of-NICs.ps1**
+
+  More information about this script used  to list and export Azure VM SKUs by region, with a specified minimum number of network interfaces (NICs), into a .CSV file, can be found on my blog: https://wmatthyssen.com/2024/05/23/using-an-azure-powershell-script-to-list-and-export-azure-vm-skus-by-region-with-minimum-nics/
