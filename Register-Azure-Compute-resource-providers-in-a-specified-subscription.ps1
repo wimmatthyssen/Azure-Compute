@@ -23,7 +23,7 @@ Register the required Azure resource providers for Azure Key Vault in the curren
 
 Filename:       Register-Azure-Compute-resource-providers-in-a-specified-subscriptions.ps1
 Created:        04/08/2025
-Last modified:  04/05/2025
+Last modified:  04/08/2025
 Author:         Wim Matthyssen
 Version:        1.0
 PowerShell:     Azure PowerShell and Azure Cloud Shell
@@ -230,3 +230,4 @@ Write-Host ($writeEmptyLine + "# Script completed" + $writeSeperatorSpaces + $gl
 -foregroundcolor $foregroundColor1 $writeEmptyLine 
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
