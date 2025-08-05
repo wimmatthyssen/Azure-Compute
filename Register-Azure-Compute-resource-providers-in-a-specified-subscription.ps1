@@ -42,6 +42,7 @@ Set-AzContext -tenantID "xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx" (if not using the defa
 
 .LINK
 
+https://wmatthyssen.com/2025/05/29/how-to-register-all-required-azure-compute-resource-providers-with-azure-powershell-on-a-new-subscription/
 #>
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -230,5 +231,6 @@ Write-Host ($writeEmptyLine + "# Script completed" + $writeSeperatorSpaces + $gl
 -foregroundcolor $foregroundColor1 $writeEmptyLine 
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
