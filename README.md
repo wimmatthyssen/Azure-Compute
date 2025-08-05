@@ -18,6 +18,6 @@ Currently this repository holds the following scritps:
 
   More information about this script used  to list and export Azure VM SKUs by region, with a specified minimum number of network interfaces (NICs), into a .CSV file, can be found on my blog: https://wmatthyssen.com/2024/05/23/using-an-azure-powershell-script-to-list-and-export-azure-vm-skus-by-region-with-minimum-nics/
 
-- **List-and-Export-VM-SKUs-in-region-with-minimum-number-of-NICs.ps1**
+- **Register-Azure-Compute-resource-providers-in-a-specified-subscription.ps1**
 
-  More information about this script used  to list and export Azure VM SKUs by region, with a specified minimum number of network interfaces (NICs), into a .CSV file, can be found on my blog: https://wmatthyssen.com/2024/05/23/using-an-azure-powershell-script-to-list-and-export-azure-vm-skus-by-region-with-minimum-nics/
+  More information about this script used  to register all the necessary Azure Compute resource providers on a subscription, can be found on my blog: https://wmatthyssen.com/2025/05/29/how-to-register-all-required-azure-compute-resource-providers-with-azure-powershell-on-a-new-subscription/
