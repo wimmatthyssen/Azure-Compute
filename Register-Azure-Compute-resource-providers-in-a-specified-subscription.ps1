@@ -38,7 +38,7 @@ Get-AzTenant (if not using the default tenant)
 Set-AzContext -tenantID "xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx" (if not using the default tenant)
 .\Register-Azure-Compute-resource-providers-in-a-specified-subscription -SubscriptionName <"your Azure subscription name here"> 
 
--> .\Register-Azure-Compute-resource-providers-in-a-specified-subscription -SubscriptionName sub-prd-myh-corp-01
+-> .\Register-Azure-Compute-resource-providers-in-a-specified-subscription -SubscriptionName sub-prd-myh-compute-01
 
 .LINK
 
@@ -128,7 +128,7 @@ Register-AzResourceProvider -ProviderNamespace $providerNameSpaceManagedIdentity
 # Register Microsoft.Storage resource provider
 Register-AzResourceProvider -ProviderNamespace $providerNameSpaceStorage | Out-Null
 
-Write-Host ($writeEmptyLine + "# All required resource providers for cor networking are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
+Write-Host ($writeEmptyLine + "# All required resource providers for Containers are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -141,7 +141,7 @@ Register-AzResourceProvider -ProviderNamespace $providerNameSpaceNetwork | Out-N
 # Register Microsoft.Insights resource provider
 Register-AzResourceProvider -ProviderNamespace $providerNameSpaceInsights | Out-Null
 
-Write-Host ($writeEmptyLine + "# All required resource providers for cor networking are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
+Write-Host ($writeEmptyLine + "# All required resource providers for Core Networking are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ Register-AzResourceProvider -ProviderNamespace $providerNameSpaceWeb | Out-Null
 # Register Microsoft.Sql resource provider
 Register-AzResourceProvider -ProviderNamespace $providerNameSpaceSql | Out-Null
 
-Write-Host ($writeEmptyLine + "# All required resource providers for Azure Automation are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
+Write-Host ($writeEmptyLine + "# All required resource providers for Azure Monitor are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ Register-AzResourceProvider -ProviderNamespace $providerNameSpaceGuestConfigurat
 # Register Microsoft.Management resource provider
 Register-AzResourceProvider -ProviderNamespace $providerNameSpaceManagement | Out-Null
 
-Write-Host ($writeEmptyLine + "# All required resource providers for Azure Key Vault are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
+Write-Host ($writeEmptyLine + "# All required resource providers for Azure Policy are currently registering or have already registered" + $writeSeperatorSpaces + $global:currenttime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
